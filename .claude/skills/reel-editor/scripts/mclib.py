@@ -86,7 +86,7 @@ RTL = CONFIG.get("rtl", True)                # Arabic / Persian / Kurdish / Urdu
 _fc = {}
 def font(path, size):
     k = (path, size)
-    if k not in _fc: _fc[k] = ImageFont.truetype(path, size)
+    if k not in _fc: _fc[k] = ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.BASIC)   # text is shaped by arabic_reshaper + bidi; raqm would reverse it again
     return _fc[k]
 
 _RS = arabic_reshaper.ArabicReshaper(configuration={"support_ligatures": True, "ARABIC LIGATURE ALLAH": False, "ARABIC LIGATURE ALLAH ISOLATED FORM": False})
