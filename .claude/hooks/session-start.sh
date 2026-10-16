@@ -8,6 +8,10 @@ fi
 
 SKILL="$CLAUDE_PROJECT_DIR/.claude/skills/reel-editor"
 
+# Style config (name, theme, captions direction) kept in the repo
+mkdir -p ~/.reel-editor
+cp "$CLAUDE_PROJECT_DIR/.claude/reel-editor-config.json" ~/.reel-editor/config.json 2>/dev/null || true
+
 # Python packages
 pip install -q --root-user-action=ignore pillow numpy arabic-reshaper python-bidi faster-whisper onnxruntime fonttools \
   || echo "reel-editor: pip install failed" >&2
