@@ -32,7 +32,15 @@ fi
 python3 -c "import sys; sys.path.insert(0, '$SKILL/scripts'); import matte; matte.ensure_model()" \
   || echo "reel-editor: matte model download failed" >&2
 
-# Whisper model (needs huggingface.co allowed in the environment's network settings)
+# Offline Whisper turbo from GitHub (fallback transcriber: scripts/transcribe_offline.py)
+pip install -q --root-user-action=ignore sherpa-onnx || echo "reel-editor: sherpa-onnx install failed" >&2
+if [ ! -f ~/models/sherpa-onnx-whisper-turbo/turbo-decoder.int8.onnx ]; then
+  mkdir -p ~/models
+  curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-turbo.tar.bz2 | tar xj -C ~/models \
+    || echo "reel-editor: Whisper turbo download failed" >&2
+fi
+
+# Whisper model for prep.py (needs huggingface.co allowed in the environment's network settings)
 timeout 300 python3 -c "from faster_whisper import WhisperModel; WhisperModel('small', device='cpu', compute_type='int8')" >/dev/null 2>&1 \
   || echo "reel-editor: Whisper model not downloaded (is huggingface.co allowed?)" >&2
 

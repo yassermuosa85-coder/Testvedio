@@ -38,6 +38,8 @@ python <skill>/scripts/setup_check.py
   timeline, if the project has several), then
   `python <skill>/scripts/from_capcut.py "<project>" "<work>/src.mov" [--timeline "Timeline 02"]` and run `prep.py` on it.
   It only *reads* their project. Its printed `CUTS` are the real cuts; `BROLL` lists clips from other sources.
+- If `prep.py` fails at the Whisper step (huggingface.co blocked by the network), its other outputs are already written:
+  run `python <skill>/scripts/transcribe_offline.py "<work>" --lang ar` (Whisper turbo from GitHub, word times ±0.3 s).
 - If they pasted their script, use it for caption spelling (Whisper mangles dialects); timings still come from `words.txt`.
 
 ## 3. Look before you design
